@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:cxfcore="http://cxf.apache.org/core"
+
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+		http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+
+	<!-- Can define the camel context here. It's merged with all the RouteBuilders and camel/*.xml,camel-rest/*.xml
+		 camel.springboot.* properties are ignored if this is used
+	 -->
+	<!-- 
+	<camelContext id="myCamelContext" xmlns="http://camel.apache.org/schema/spring">
+		<route id="simple-route">
+			<from id="route-timer" uri="timer:foo?period=2000&amp;repeatCount=1" />
+			<log id="route-log" message=">>> simple-route" />
+		</route>
+	</camelContext>
+	-->
+
+	<!-- Beans -->
+	<bean id="succResponse" class="my.company.model.ApiResponse">
+		<property name="code" value="0" />
+		<property name="message" value="OK" />
+	</bean>
+	
+	<!-- Can set the number of parallel splitter runs this way -->
+	<!-- Lazy init is required otherwise the thread pool may not show up in JMX -->
+	<camel:threadPool id="myThreadPool" poolSize="8" maxPoolSize="16" threadName="Splitter" maxQueueSize="0" rejectedPolicy="CallerRuns"/>
+	
+	<!-- CXF -->
+	<cxf:cxfEndpoint
+		id="cxfGlobalWeather"
+		address="${GlobalWeather.url}"
+		serviceClass="net.webservicex.GlobalWeatherSoap">
+		<cxf:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature"/> <!-- Logs in/out message at INFO level -->
+		</cxf:features>
+		<cxf:outInterceptors>
+			<ref bean="addSignatureInterceptor"/>
+		</cxf:outInterceptors>
+	</cxf:cxfEndpoint>
+
+	<!-- Add SSL settings for CXF if needed. The resource is looked up on file system and on classpath too. -->
+	<!--<camel:sslContextParameters id="sslContextParameters">-->
+		<!--<camel:trustManagers >-->
+			<!--<camel:keyStore resource="myTruststore.jks" password="changeit"/>-->
+		<!--</camel:trustManagers>-->
+	<!--</camel:sslContextParameters>-->
+
+	<!-- Using CXF with HttpAsyncClient is not suggested as it adds an extra layer of threads, but here is an example.
+		 See http://cxf.apache.org/docs/asynchronous-client-http-transport.html
+		 use this bus in cxfEndpoint
+		 org.apache.cxf.transport.http.async.usePolicy=ALWAYS enforces using HttpAsyncClient for synchronous requests too
+	-->
+	<!--<cxfcore:bus bus="asyncbus">-->
+		<!--<cxfcore:properties>-->
+			<!--<entry key="org.apache.cxf.transport.http.async.usePolicy" value="ALWAYS" />-->
+			<!--<entry key="org.apache.cxf.transport.http.async.ioThreadCount" value="2" />-->
+			<!--<entry key="org.apache.cxf.transport.http.async.MAX_PER_HOST_CONNECTIONS" value="5" />-->
+		<!--</cxfcore:properties>-->
+	<!--</cxfcore:bus>-->
+
+</beans>
