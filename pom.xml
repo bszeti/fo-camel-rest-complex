@@ -13,7 +13,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <fabric8.version>3.0.8</fabric8.version>
+    <!--<fabric8.version>3.0.8</fabric8.version>-->
+    <fabric8.version>2.3.7.fuse-000036-redhat-2</fabric8.version>
     <swagger-ui.version>3.1.4</swagger-ui.version>
     <commons-collections4.version>4.1</commons-collections4.version>
 
@@ -140,6 +141,11 @@
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-ws-security</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-rest-swagger</artifactId>
     </dependency>
 
     <!-- testing -->
