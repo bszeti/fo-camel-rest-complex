@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>bszeti.camelspringboot</groupId>
@@ -22,7 +20,7 @@
     <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version> <!-- Unit test runner were created before the tests with 2.19 -->
     <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
     <spring-boot-plugin.version>1.5.4.RELEASE</spring-boot-plugin.version>
-    <fabric8.maven.plugin.version>3.1.80</fabric8.maven.plugin.version> <!-- Tested with Red Hat CDK 3.0 -->
+    <fabric8.maven.plugin.version>3.5.38</fabric8.maven.plugin.version> <!-- Tested with Red Hat CDK 3.0 -->
     <git-commit-id-plugin.version>2.2.3</git-commit-id-plugin.version>
   </properties>
 
@@ -246,7 +244,17 @@
                 </goals>
               </execution>
             </executions>
-          </plugin>
+          
+        <configuration>
+          <resources>
+            <labels>
+              <all>
+                <space>myspace</space>
+              </all>
+            </labels>
+          </resources>
+        </configuration>
+      </plugin>
         </plugins>
       </build>
     </profile>
