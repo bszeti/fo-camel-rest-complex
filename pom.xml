@@ -229,6 +229,7 @@
   <profiles>
     <profile>
       <id>fabric8</id>
+      <activation><activeByDefault>true</activeByDefault></activation>
       <build>
         <plugins>
           <plugin>
