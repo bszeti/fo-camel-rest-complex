@@ -21,7 +21,6 @@
     <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version> <!-- Unit test runner were created before the tests with 2.19 -->
     <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
     <spring-boot-plugin.version>1.5.4.RELEASE</spring-boot-plugin.version>
-    <fabric8.maven.plugin.version>3.5.38</fabric8.maven.plugin.version> <!-- Tested with Red Hat CDK 3.0 -->
     <git-commit-id-plugin.version>2.2.3</git-commit-id-plugin.version>
   </properties>
 
@@ -141,11 +140,6 @@
       <artifactId>cxf-rt-ws-security</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-rest-swagger</artifactId>
-    </dependency>
-
     <!-- testing -->
     <dependency>
       <groupId>junit</groupId>
@@ -231,39 +225,4 @@
     
   </build>
 
-  <!-- Run with "-P fabric8" to enable OpenShift deployment -->
-  <profiles>
-    <profile>
-      <id>fabric8</id>
-      <activation><activeByDefault>true</activeByDefault></activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>fabric8-maven-plugin</artifactId>
-            <version>${fabric8.maven.plugin.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>resource</goal>
-                  <goal>build</goal>
-                  <!--<goal>deploy</goal>-->
-                </goals>
-              </execution>
-            </executions>
-          
-        <configuration>
-          <resources>
-            <labels>
-              <all>
-                <space>myspace</space>
-              </all>
-            </labels>
-          </resources>
-        </configuration>
-      </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
