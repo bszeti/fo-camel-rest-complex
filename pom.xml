@@ -11,7 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <fabric8.version>3.0.8</fabric8.version>
+    <fabric8.version>3.0.11</fabric8.version>
     <swagger-ui.version>3.1.4</swagger-ui.version>
     <commons-collections4.version>4.1</commons-collections4.version>
 
